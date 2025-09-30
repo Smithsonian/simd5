@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "simd5"
-version = "0.3.0"
+version = "0.3.1"
 authors = [
   { name="Luis J. Villanueva", email="villanueval@si.edu" },
 ]
@@ -16,7 +16,7 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
 ]
-dependencies = ["p_tqdm"]
+dependencies = ["p_tqdm","pandas"]
 
 [project.urls]
 "Homepage" = "https://github.com/Smithsonian/simd5"

@@ -25,7 +25,7 @@ python3 -m pip install -U simd5
 To create a MD5 file with the filenames and hashes:
 
 ```python
-from simd5 import simd5
+import simd5
 
 simd5.md5_file(folder="files", fileformat="m f", no_workers=4)
 ```
@@ -55,7 +55,6 @@ The command can take these arguments:
  * `files`: A search pattern for which files to compare the hashes
  * `csv`: Save the results to a `results.csv` file
  * `no_workers`: How many parallel processes to use. By default, it will use the number of cores found in the system.
-
 
 
 ## License
