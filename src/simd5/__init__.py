@@ -2,9 +2,9 @@
 #
 # Python module to create MD5 files that contains the
 #   MD5 hash of all the files in a subdirectory for digital deliveries.
-# v 0.3.0
+# v 0.3.2
 # 
-# 10 Jun 2025
+# 20 Sep 2025
 #
 # Digitization Program Office,
 # Office of the Chief Information Officer,
@@ -18,11 +18,8 @@ import glob
 import itertools
 import pandas as pd
 
-# from pathlib import Path
 from time import localtime
 from time import strftime
-from pathlib import Path
-from multiprocessing import Pool
 
 # Parallel
 import multiprocessing
@@ -91,7 +88,7 @@ def check_md5sum(md5_file, file):
             md5_hash.update(byte_block)
     file_md5 = md5_hash.hexdigest()
     md5_from_file = md5_file[md5_file.file == filename]['md5'].to_string(index=False).strip()
-    if file_md5 == md5_from_file:
+    if file_md5.lower() == md5_from_file.lower():
         return (filename, file_md5, md5_from_file, 0)
     elif md5_from_file == 'Series([], )':
         return (filename, file_md5, md5_from_file, 1)
@@ -114,7 +111,7 @@ def check_md5_file(md5_file=None, files=None, csv=False, no_workers=1):
     if md5_file == None:
         print("Missing md5_file")
         return 9, 9
-    md5_file = pd.read_csv(md5_file, sep=" ", names=('md5', 'file'))
+    md5_file = pd.read_csv(md5_file, sep="\s+", names=('md5', 'file'))
     if files == None:
         print("Missing list of files")
         return 9, 9
@@ -126,12 +123,11 @@ def check_md5_file(md5_file=None, files=None, csv=False, no_workers=1):
                 os.remove("results.csv")
             except:
                 return 1, "Error removing results.csv file"
-    with Pool(no_workers) as pool:
-        checked_files = pd.DataFrame(pool.starmap(check_md5sum, inputs), columns=("filename", "file_md5", "md5_from_file", "error"))
-        pool.close()
-        pool.join()
+    checked_files = pd.DataFrame(p_map(check_md5sum, itertools.repeat(md5_file), files, **{"num_cpus": int(no_workers)}), columns=("filename", "file_md5", "md5_from_file", "error"))
+    # Write output?
     if csv:
         checked_files.to_csv("results.csv", header = 1, index = False, mode = "w")
+    # Report errors
     if checked_files['error'].sum() > 0:
         return 1, "Hash of {} files don't match the contents of the MD5 file".format(str(checked_files['error'].sum()))
     else:

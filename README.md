@@ -1,6 +1,6 @@
 # simd5
 
-Python module to create MD5 files for digital deliveries.
+Python module to create MD5 files for digital deliveries. Current version: 0.3.2
 
 A project of the Digitization Program Office, OCIO, Smithsonian.
 

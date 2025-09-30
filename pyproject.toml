@@ -4,11 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "simd5"
-version = "0.3.1"
+version = "0.3.2"
 authors = [
   { name="Luis J. Villanueva", email="villanueval@si.edu" },
 ]
-description = "Python module to create MD5 files for digital deliveries."
+description = "Python module to create and check MD5 files for digital deliveries."
 readme = "README.md"
 requires-python = ">=3.6"
 classifiers = [
