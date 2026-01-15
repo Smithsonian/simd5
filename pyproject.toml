@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "simd5"
-version = "0.3.2"
+version = "0.3.3"
 authors = [
   { name="Luis J. Villanueva", email="villanueval@si.edu" },
 ]

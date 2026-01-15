@@ -111,7 +111,7 @@ def check_md5_file(md5_file=None, files=None, csv=False, no_workers=1):
     if md5_file == None:
         print("Missing md5_file")
         return 9, 9
-    md5_file = pd.read_csv(md5_file, sep="\s+", names=('md5', 'file'))
+    md5_file = pd.read_csv(md5_file, sep=r'\s+', names=('md5', 'file'))
     if files == None:
         print("Missing list of files")
         return 9, 9
